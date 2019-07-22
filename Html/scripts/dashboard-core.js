@@ -287,7 +287,9 @@
                 Dashboard.prototype.dataUpdateCallback = function (jsonData) {
                     var data = JSON.parse(jsonData);
                     this.process(data);
-                    this.requestDataUpdate();
+                    // Requesting data just after getting it seems redundant.
+                    // Disabling the call.
+                    //this.requestDataUpdate();
                 };
 
                 Dashboard.prototype.process = function (data, reason) {
