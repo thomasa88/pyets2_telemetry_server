@@ -27,6 +27,7 @@ import pyets2lib.scshelpers
 from pyets2lib.scsdefs import *
 
 from . import web_server
+from .version import VERSION
 
 # From ETS2 Telemetry Server
 TELEMETRY_PLUGIN_VERSION = '4'
@@ -65,6 +66,8 @@ def telemetry_init(version, params):
     global logger_
     logger_ = params.common.logger
     init_params_ = params
+
+    logger_.info("Version %s", VERSION)
     
     init_shared_data()
     shared_data_['telemetry_data']['game']['gameName'] = init_params_.common.game_id.upper().replace('EUT2', 'ETS2')
