@@ -142,7 +142,7 @@ class SignalrHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             # Each request is handled in a new thread, so we need to set up
             # exception logging
-            scshelpers.log_exception(e)
+            pyets2lib.scshelpers.log_exception(e)
             raise
 
     def do_signalr_comm(self):

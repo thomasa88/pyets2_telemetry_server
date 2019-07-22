@@ -172,7 +172,7 @@ def run_and_log_exceptions(target):
         try:
             target()
         except Exception as e:
-            scshelpers.log_exception(e)
+            pyets2lib.scshelpers.log_exception(e)
             raise
     return runner
 
