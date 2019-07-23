@@ -18,18 +18,41 @@
 # If not, see <https://www.gnu.org/licenses/>.
 #
 
+NAME := pyets2_telemetry_server
 VERSION := $(shell cut -d '"' -f 2 version.py | sed 's/\./_/g')
 FILES := LICENSE Html signalr __init__.py version.py web_server.py
-PY_DIR := python/pyets2_telemetry_server
+PY_PLUGIN_DIR := python
+PY_PKG_DIR := $(PY_PLUGIN_DIR)/$(NAME)
+TAR_NAME := $(NAME)_$(VERSION).tar.bz2
 
 .PHONY: install
-install: $(FILES)
+install: uninstall $(FILES)
 	@( [ "x$(DESTDIR)" != "x" ] && [ -e "$(DESTDIR)" ] ) || \
 	  ( echo 'Please provide DESTDIR="<ETS2 PLUGIN DIR>"'; exit 1; )
-	install -d "$(DESTDIR)/$(PY_DIR)"
-	cp -a $(FILES) "$(DESTDIR)/$(PY_DIR)/"
+	@install -d "$(DESTDIR)/$(PY_PKG_DIR)"
+	@cp -a $(FILES) "$(DESTDIR)/$(PY_PKG_DIR)/"
+	@echo "Installed in \"$(DESTDIR)/$(PY_PKG_DIR)\""
+
+# Set up symbolic links to the repository
+.PHONY: install-dev
+install-dev: uninstall
+	@( [ "x$(DESTDIR)" != "x" ] && [ -e "$(DESTDIR)" ] ) || \
+	  ( echo 'Please provide DESTDIR="<ETS2 PLUGIN DIR>"'; exit 1; )
+	@mkdir -p "$(DESTDIR)/$(PY_PLUGIN_DIR)"
+	@ln -s $(PWD) "$(DESTDIR)/$(PY_PKG_DIR)"
+	@echo "Installed links in \"$(DESTDIR)/$(PY_PKG_DIR)\""
+
+.PHONY: uninstall
+uninstall:
+	@( [ "x$(DESTDIR)" != "x" ] && [ -e "$(DESTDIR)" ] ) || \
+	  ( echo 'Please provide DESTDIR="<ETS2 PLUGIN DIR>"'; exit 1; )
+	@rm -rf "$(DESTDIR)/$(PY_PKG_DIR)"
+# Remove python dir if it is empty
+	@[ ! -e "$(DESTDIR)/$(PY_PLUGIN_DIR)" ] || rmdir --ignore-fail-on-non-empty "$(DESTDIR)/$(PY_PLUGIN_DIR)"
+	@echo "Uninstalled from \"$(DESTDIR)/$(PY_PKG_DIR)\""
 
 .PHONY: package
 package: $(FILES)
-	tar --transform 'flags=r;s|^|$(PY_DIR)/|' \
-	  -cjf pyets2_telemetry_server_$(VERSION).tar.bz2 $^
+	@tar --transform 'flags=r;s|^|$(PY_PKG_DIR)/|' \
+	  -cjf $(TAR_NAME) $^
+	@echo "Created $(TAR_NAME)"
