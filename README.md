@@ -81,7 +81,7 @@ The dashboard protocol has the following function calls:
 
 ### Client Tweaks
 
-The original dashboard client, upon receiving data from `UpdateData()`, it immediately calls `UpdateData()`. This call has been removed, as the client seems to work fine without it.
+The original dashboard client, upon receiving data from `UpdateData()`, immediately calls `UpdateData()`, which results in the data being fetched twice every time. This call has been removed, as the client seems to work fine without it.
 
 ## Future Improvements
 
@@ -95,7 +95,7 @@ The following might need improvement in the future:
 
 * Support multiple clients correctly. Current server might miss to send data updates to all clients, when there are multiple clients.
 * Avoid leaking client information upon client disconnection.
-* Fix server name, as displayed as `%SERVER%` in the dashboard.
+* Fix server name displayed on the menu page. (Currently displayed as `%SERVER%`).
 
 ## License
 
