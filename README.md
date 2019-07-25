@@ -12,7 +12,7 @@ The server is a full replacement for the server in [ETS2 Telemetry Web Server](h
 
 First, install [pyets2_telemetry](https://github.com/thomasa88/pyets2_telemetry) for Python plug-in support.
 
-Then, download the latest release from the [release page](https://github.com/thomasa88/pyets2_telemetry_server/releases) and unpack the archive in the ETS2 `plugins` directory (typically `"$HOME/.steam/steam/steamapps/common/Euro Truck Simulator 2/bin/linux_x64/plugins"`).
+Then, download the latest release archive (`.tar.bz2`) from the [release page](https://github.com/thomasa88/pyets2_telemetry_server/releases) and unpack it in the ETS2 `plugins` directory (typically `"$HOME/.steam/steam/steamapps/common/Euro Truck Simulator 2/bin/linux_x64/plugins"`).
 
 The unpacked file structure should look similar to this:
 
